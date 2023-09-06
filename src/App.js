@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { createGlobalStyle } from "styled-components"
+
+export const ToggledGlobalStyle = createGlobalStyle`
+  body::after {
+    content: "Some extra content"
+  }
+`;
+
+const Font = createGlobalStyle`
+  @font-face {
+    font-family: 'Roboto';
+    src: url("/Roboto-Regular.ttf");
+  }
+  body {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+  }
+`;
 
 function App() {
+  const [toggled, setToggled] = useState(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>This text flashes when some unrelated global style is added / removed</h1>
+      <Font />
+
+      <button onClick={() => setToggled((previous) => !previous)}>
+        Toggle
+      </button>
+
+      {toggled && <ToggledGlobalStyle />}
     </div>
   );
 }
